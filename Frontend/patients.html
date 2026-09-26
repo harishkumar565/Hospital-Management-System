@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Management - HopeLife</title>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom Style Sheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Floating Navbar -->
+    <nav class="navbar">
+        <div class="nav-brand" onclick="window.location.href='index.html'">
+            <i class="fas fa-heartbeat"></i> HopeLife
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+            <li class="active"><a href="patients.html"><i class="fas fa-user-injured"></i> Patients</a></li>
+            <li><a href="doctors.html"><i class="fas fa-user-md"></i> Doctors</a></li>
+            <li><a href="appointments.html"><i class="fas fa-calendar-alt"></i> Appointments</a></li>
+            <li><a href="records.html"><i class="fas fa-file-medical"></i> Records</a></li>
+            <li><a href="billing.html"><i class="fas fa-file-invoice-dollar"></i> Billing</a></li>
+            <li><a href="dashboard.html"><i class="fas fa-chart-pie"></i> Dashboard</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container">
+        <div class="page-header">
+            <div>
+                <h1>Patient Management</h1>
+                <p style="color: var(--text-secondary);">Register patients, update contact profiles, and view records.</p>
+            </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 350px 1fr; gap: 1.5rem; align-items: start;">
+            <!-- Left Side: Registration / Update Form Card -->
+            <div class="card" id="patient-form-card">
+                <h3 id="patient-form-title" style="margin-bottom: 1.25rem; font-size: 1.4rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.75rem;">
+                    <i class="fas fa-hospital-user"></i> Register New Patient
+                </h3>
+                <form id="patient-form">
+                    <!-- Hidden ID input to track update mode -->
+                    <input type="hidden" id="patient-id">
+
+                    <div class="form-group">
+                        <label for="patient-name"><i class="fas fa-user"></i> Patient Name</label>
+                        <input type="text" id="patient-name" class="form-control" placeholder="Enter Full Name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="patient-age"><i class="fas fa-calendar-day"></i> Age</label>
+                        <input type="number" id="patient-age" class="form-control" placeholder="Enter Age" min="1" max="120" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="patient-gender"><i class="fas fa-venus-mars"></i> Gender</label>
+                        <select id="patient-gender" class="form-control" required>
+                            <option value="">-- Choose Gender --</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="patient-phone"><i class="fas fa-phone-alt"></i> Phone Number</label>
+                        <input type="tel" id="patient-phone" class="form-control" placeholder="e.g. 9876543210" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="patient-email"><i class="fas fa-envelope"></i> Email Address</label>
+                        <input type="email" id="patient-email" class="form-control" placeholder="name@domain.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="patient-blood-group"><i class="fas fa-tint"></i> Blood Group</label>
+                        <select id="patient-blood-group" class="form-control" required>
+                            <option value="">-- Choose Blood Group --</option>
+                            <option value="A+">A+</option>
+                            <option value="A-">A-</option>
+                            <option value="B+">B+</option>
+                            <option value="B-">B-</option>
+                            <option value="O+">O+</option>
+                            <option value="O-">O-</option>
+                            <option value="AB+">AB+</option>
+                            <option value="AB-">AB-</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="patient-address"><i class="fas fa-map-marked-alt"></i> Home Address</label>
+                        <input type="text" id="patient-address" class="form-control" placeholder="City or Full Address" required>
+                    </div>
+
+                    <div style="display: flex; gap: 0.5rem; margin-top: 1.5rem;">
+                        <button type="submit" class="btn btn-primary" style="flex: 1;"><i class="fas fa-save"></i> Save Details</button>
+                        <button type="button" id="cancel-patient-edit" class="btn btn-secondary" style="display: none;"><i class="fas fa-times"></i> Cancel</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Right Side: Registered Patients Data Card -->
+            <div class="card" style="align-self: stretch;">
+                <h3 style="margin-bottom: 1.25rem; font-size: 1.4rem;"><i class="fas fa-notes-medical"></i> Patient Records Directory</h3>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Patient Name</th>
+                                <th>Age</th>
+                                <th>Gender</th>
+                                <th>Phone</th>
+                                <th>Email</th>
+                                <th>Blood</th>
+                                <th>Address</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="patient-table-body">
+                            <!-- Populated dynamically via Fetch API -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Global JS Script -->
+    <script src="script.js"></script>
+</body>
+</html>
