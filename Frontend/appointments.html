@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment Management - HopeLife</title>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom Style Sheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Floating Navbar -->
+    <nav class="navbar">
+        <div class="nav-brand" onclick="window.location.href='index.html'">
+            <i class="fas fa-heartbeat"></i> HopeLife
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="patients.html"><i class="fas fa-user-injured"></i> Patients</a></li>
+            <li><a href="doctors.html"><i class="fas fa-user-md"></i> Doctors</a></li>
+            <li class="active"><a href="appointments.html"><i class="fas fa-calendar-alt"></i> Appointments</a></li>
+            <li><a href="records.html"><i class="fas fa-file-medical"></i> Records</a></li>
+            <li><a href="billing.html"><i class="fas fa-file-invoice-dollar"></i> Billing</a></li>
+            <li><a href="dashboard.html"><i class="fas fa-chart-pie"></i> Dashboard</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container">
+        <div class="page-header">
+            <div>
+                <h1>Appointment Schedules</h1>
+                <p style="color: var(--text-secondary);">Book patient checkups, manage timeslots, and track consultation statuses.</p>
+            </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 350px 1fr; gap: 1.5rem; align-items: start;">
+            <!-- Left Side: Book Appointment Form Card -->
+            <div class="card" id="appointment-form-card">
+                <h3 id="appointment-form-title" style="margin-bottom: 1.25rem; font-size: 1.4rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.75rem;">
+                    <i class="fas fa-calendar-plus"></i> Book Appointment
+                </h3>
+                <form id="appointment-form">
+                    <!-- Hidden ID input to track update mode -->
+                    <input type="hidden" id="appointment-id">
+
+                    <div class="form-group">
+                        <label for="patient-name"><i class="fas fa-hospital-user"></i> Patient Selection</label>
+                        <select id="patient-name" class="form-control" required>
+                            <!-- Populated dynamically via script.js -->
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="doctor-name"><i class="fas fa-user-md"></i> Doctor Selection</label>
+                        <select id="doctor-name" class="form-control" required>
+                            <!-- Populated dynamically via script.js -->
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="appointment-date"><i class="fas fa-calendar-alt"></i> Date</label>
+                        <input type="date" id="appointment-date" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="appointment-time"><i class="fas fa-clock"></i> Time Slot</label>
+                        <input type="time" id="appointment-time" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="appointment-status"><i class="fas fa-heartbeat"></i> Status</label>
+                        <select id="appointment-status" class="form-control" required>
+                            <option value="Scheduled">Scheduled</option>
+                            <option value="Completed">Completed</option>
+                            <option value="Cancelled">Cancelled</option>
+                        </select>
+                    </div>
+
+                    <div style="display: flex; gap: 0.5rem; margin-top: 1.5rem;">
+                        <button type="submit" class="btn btn-primary" style="flex: 1;"><i class="fas fa-calendar-check"></i> Book Consultation</button>
+                        <button type="button" id="cancel-appointment-edit" class="btn btn-secondary" style="display: none;"><i class="fas fa-times"></i> Cancel</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Right Side: Appointments Schedule List Table Card -->
+            <div class="card" style="align-self: stretch;">
+                <h3 style="margin-bottom: 1.25rem; font-size: 1.4rem;"><i class="fas fa-clipboard-list"></i> Active Appointments Ledger</h3>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Patient Name</th>
+                                <th>Doctor Name</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="appointment-table-body">
+                            <!-- Populated dynamically via Fetch API -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Global JS Script -->
+    <script src="script.js"></script>
+</body>
+</html>
