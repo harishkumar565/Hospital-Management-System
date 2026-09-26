@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Management - HopeLife</title>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom Style Sheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Floating Navbar -->
+    <nav class="navbar">
+        <div class="nav-brand" onclick="window.location.href='index.html'">
+            <i class="fas fa-heartbeat"></i> HopeLife
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="patients.html"><i class="fas fa-user-injured"></i> Patients</a></li>
+            <li class="active"><a href="doctors.html"><i class="fas fa-user-md"></i> Doctors</a></li>
+            <li><a href="appointments.html"><i class="fas fa-calendar-alt"></i> Appointments</a></li>
+            <li><a href="records.html"><i class="fas fa-file-medical"></i> Records</a></li>
+            <li><a href="billing.html"><i class="fas fa-file-invoice-dollar"></i> Billing</a></li>
+            <li><a href="dashboard.html"><i class="fas fa-chart-pie"></i> Dashboard</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container">
+        <div class="page-header">
+            <div>
+                <h1>Doctor Directory</h1>
+                <p style="color: var(--text-secondary);">Manage medical specialists, departments, and active consulting fees.</p>
+            </div>
+            <button class="btn btn-primary" id="open-doctor-modal">
+                <i class="fas fa-plus"></i> Add New Doctor
+            </button>
+        </div>
+
+        <!-- Doctor Grid Directory -->
+        <div class="doctor-grid" id="doctor-grid">
+            <!-- Populated dynamically via Fetch API -->
+        </div>
+    </div>
+
+    <!-- Add/Edit Doctor Dialog Modal -->
+    <div class="modal" id="doctor-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="doctor-form-title">Add New Doctor</h2>
+                    <button class="close-btn" id="close-doctor-modal"><i class="fas fa-times"></i></button>
+                </div>
+                <form id="doctor-form">
+                    <!-- Hidden ID input to track update mode -->
+                    <input type="hidden" id="doctor-id">
+
+                    <div class="form-group">
+                        <label for="doctor-name">Doctor Name</label>
+                        <input type="text" id="doctor-name" class="form-control" placeholder="e.g. Dr. Priya Reddy" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="doctor-specialization">Specialization</label>
+                        <input type="text" id="doctor-specialization" class="form-control" placeholder="e.g. Cardiologist" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="doctor-department">Department</label>
+                        <select id="doctor-department" class="form-control" required>
+                            <option value="">-- Choose Department --</option>
+                            <option value="Cardiology">Cardiology</option>
+                            <option value="Neurology">Neurology</option>
+                            <option value="Pediatrics">Pediatrics</option>
+                            <option value="Orthopedics">Orthopedics</option>
+                            <option value="General Medicine">General Medicine</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="doctor-experience">Years of Experience</label>
+                        <input type="number" id="doctor-experience" class="form-control" placeholder="e.g. 10" min="0" max="60" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="doctor-phone">Phone Number</label>
+                        <input type="tel" id="doctor-phone" class="form-control" placeholder="e.g. 9988776655" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="doctor-fee">Consultation Fee (INR)</label>
+                        <input type="number" id="doctor-fee" class="form-control" placeholder="e.g. 800" min="0" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1.5rem;">
+                        <i class="fas fa-save"></i> Save Profile
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Global JS Script -->
+    <script src="script.js"></script>
+</body>
+</html>
