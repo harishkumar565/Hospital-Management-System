@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Billing Management - HopeLife</title>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom Style Sheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Floating Navbar -->
+    <nav class="navbar">
+        <div class="nav-brand" onclick="window.location.href='index.html'">
+            <i class="fas fa-heartbeat"></i> HopeLife
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="patients.html"><i class="fas fa-user-injured"></i> Patients</a></li>
+            <li><a href="doctors.html"><i class="fas fa-user-md"></i> Doctors</a></li>
+            <li><a href="appointments.html"><i class="fas fa-calendar-alt"></i> Appointments</a></li>
+            <li><a href="records.html"><i class="fas fa-file-medical"></i> Records</a></li>
+            <li class="active"><a href="billing.html"><i class="fas fa-file-invoice-dollar"></i> Billing</a></li>
+            <li><a href="dashboard.html"><i class="fas fa-chart-pie"></i> Dashboard</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container">
+        <div class="page-header">
+            <div>
+                <h1>Billing & Payment Management</h1>
+                <p style="color: var(--text-secondary);">Generate hospital bills, process patient payments, and print formal invoices.</p>
+            </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 360px 1fr; gap: 1.5rem; align-items: start;">
+            <!-- Left Side: Generate Bill Form Card -->
+            <div class="card" id="bill-form-card">
+                <h3 id="bill-form-title" style="margin-bottom: 1.25rem; font-size: 1.4rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.75rem;">
+                    <i class="fas fa-file-invoice-dollar"></i> Generate New Bill
+                </h3>
+                <form id="bill-form">
+                    <!-- Hidden ID input to track update mode -->
+                    <input type="hidden" id="bill-id">
+
+                    <div class="form-group">
+                        <label for="patient-name"><i class="fas fa-hospital-user"></i> Patient Selection</label>
+                        <select id="patient-name" class="form-control" required>
+                            <!-- Populated dynamically via script.js -->
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="doctor-select"><i class="fas fa-user-md"></i> Doctor Consultation Helper</label>
+                        <select id="doctor-select" class="form-control">
+                            <!-- Populated dynamically via script.js -->
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="consultation-fee"><i class="fas fa-hand-holding-medical"></i> Consultation Fee (INR)</label>
+                        <input type="number" id="consultation-fee" class="form-control" placeholder="0.00" min="0" step="0.01" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="medicine-charge"><i class="fas fa-pills"></i> Medicine Charge (INR)</label>
+                        <input type="number" id="medicine-charge" class="form-control" placeholder="0.00" min="0" step="0.01" value="0.00" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="laboratory-charge"><i class="fas fa-flask"></i> Laboratory Charge (INR)</label>
+                        <input type="number" id="laboratory-charge" class="form-control" placeholder="0.00" min="0" step="0.01" value="0.00" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="total-amount"><i class="fas fa-calculator"></i> Total Invoice Amount (INR)</label>
+                        <input type="text" id="total-amount" class="form-control" value="0.00" disabled style="background: rgba(255, 255, 255, 0.05); font-weight: 700; color: var(--text-primary);">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="payment-method"><i class="fas fa-credit-card"></i> Payment Method</label>
+                        <select id="payment-method" class="form-control" required>
+                            <option value="Cash">Cash</option>
+                            <option value="UPI">UPI</option>
+                            <option value="Credit Card">Credit Card</option>
+                            <option value="Debit Card">Debit Card</option>
+                            <option value="Insurance">Insurance</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="payment-status"><i class="fas fa-question-circle"></i> Payment Status</label>
+                        <select id="payment-status" class="form-control" required>
+                            <option value="Paid">Paid</option>
+                            <option value="Pending">Pending</option>
+                        </select>
+                    </div>
+
+                    <div style="display: flex; gap: 0.5rem; margin-top: 1.5rem;">
+                        <button type="submit" class="btn btn-primary" style="flex: 1;"><i class="fas fa-receipt"></i> Process Bill</button>
+                        <button type="button" id="cancel-bill-edit" class="btn btn-secondary" style="display: none;"><i class="fas fa-times"></i> Cancel</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Right Side: Bills List Ledger Card -->
+            <div class="card" style="align-self: stretch;">
+                <h3 style="margin-bottom: 1.25rem; font-size: 1.4rem;"><i class="fas fa-wallet"></i> Financial Ledger Directory</h3>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Invoice ID</th>
+                                <th>Patient Name</th>
+                                <th>Consult Fee</th>
+                                <th>Med Charge</th>
+                                <th>Lab Charge</th>
+                                <th>Total Bill</th>
+                                <th>Method</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bill-table-body">
+                            <!-- Populated dynamically via Fetch API -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden invoice print area (styled specifically in style.css @media print) -->
+    <div id="invoice-print-area">
+        <div class="invoice-header">
+            <div class="invoice-logo">
+                <i class="fas fa-heartbeat"></i> HopeLife Hospital
+            </div>
+            <div class="invoice-title">
+                <h1>OFFICIAL INVOICE</h1>
+                <p>Invoice #: <span id="print-invoice-id">101</span></p>
+            </div>
+        </div>
+        <div class="invoice-details">
+            <div>
+                <h3>Patient Details:</h3>
+                <p><strong>Name:</strong> <span id="print-patient-name">John Doe</span></p>
+                <p><strong>Institution:</strong> HopeLife General Wards</p>
+            </div>
+            <div style="text-align: right;">
+                <h3>Billing Info:</h3>
+                <p><strong>Date Generated:</strong> <span id="print-date">07/20/2026</span></p>
+                <p><strong>Payment Method:</strong> <span id="print-payment-method">UPI</span></p>
+                <p><strong>Payment Status:</strong> <span id="print-payment-status">Paid</span></p>
+            </div>
+        </div>
+        <table class="invoice-table">
+            <thead>
+                <tr>
+                    <th>Item Description</th>
+                    <th style="text-align: right;">Amount (INR)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Doctor Consultation Fee</td>
+                    <td style="text-align: right;" id="print-consult-fee">₹0.00</td>
+                </tr>
+                <tr>
+                    <td>Medicine & Dispensary Charges</td>
+                    <td style="text-align: right;" id="print-medicine-fee">₹0.00</td>
+                </tr>
+                <tr>
+                    <td>Clinical Laboratory / Diagnostic Tests</td>
+                    <td style="text-align: right;" id="print-lab-fee">₹0.00</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="invoice-total">
+            Total Amount Paid: <span id="print-total">₹0.00</span>
+        </div>
+        <div class="invoice-footer">
+            <p>Thank you for choosing HopeLife Hospital. Wishing you a speedy recovery.</p>
+            <p style="font-size: 0.75rem; margin-top: 0.5rem; color:#b0b0b0;">* This is a computer-generated receipt, no signature required.</p>
+        </div>
+    </div>
+
+    <!-- Global JS Script -->
+    <script src="script.js"></script>
+</body>
+</html>
