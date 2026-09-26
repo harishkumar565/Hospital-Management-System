@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - HopeLife</title>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom Style Sheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Floating Navbar -->
+    <nav class="navbar">
+        <div class="nav-brand" onclick="window.location.href='index.html'">
+            <i class="fas fa-heartbeat"></i> HopeLife
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="patients.html"><i class="fas fa-user-injured"></i> Patients</a></li>
+            <li><a href="doctors.html"><i class="fas fa-user-md"></i> Doctors</a></li>
+            <li><a href="appointments.html"><i class="fas fa-calendar-alt"></i> Appointments</a></li>
+            <li><a href="records.html"><i class="fas fa-file-medical"></i> Records</a></li>
+            <li><a href="billing.html"><i class="fas fa-file-invoice-dollar"></i> Billing</a></li>
+            <li class="active"><a href="dashboard.html"><i class="fas fa-chart-pie"></i> Dashboard</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container" id="dashboard-stats">
+        <div class="page-header">
+            <div>
+                <h1>Admin Dashboard</h1>
+                <p style="color: var(--text-secondary);">Real-time operations summaries, financial tracking, and checkup slots.</p>
+            </div>
+            <span class="badge badge-success" style="padding: 0.5rem 1rem; font-size: 0.9rem;">
+                <i class="fas fa-signal"></i> System Online
+            </span>
+        </div>
+
+        <!-- KPI Cards Grid -->
+        <div class="grid-4" style="margin-bottom: 2rem;">
+            <!-- Total Patients -->
+            <div class="card stat-card">
+                <div class="stat-info">
+                    <h3>Total Patients</h3>
+                    <div class="stat-number" id="total-patients">0</div>
+                </div>
+                <div class="stat-icon primary"><i class="fas fa-user-injured"></i></div>
+            </div>
+
+            <!-- Total Doctors -->
+            <div class="card stat-card">
+                <div class="stat-info">
+                    <h3>Total Doctors</h3>
+                    <div class="stat-number" id="total-doctors">0</div>
+                </div>
+                <div class="stat-icon success"><i class="fas fa-user-md"></i></div>
+            </div>
+
+            <!-- Today's Appointments -->
+            <div class="card stat-card">
+                <div class="stat-info">
+                    <h3>Today's Appts</h3>
+                    <div class="stat-number" id="today-appointments-count">0</div>
+                </div>
+                <div class="stat-icon warning"><i class="fas fa-calendar-check"></i></div>
+            </div>
+
+            <!-- Medical Records -->
+            <div class="card stat-card">
+                <div class="stat-info">
+                    <h3>Medical Records</h3>
+                    <div class="stat-number" id="total-records">0</div>
+                </div>
+                <div class="stat-icon info"><i class="fas fa-file-medical"></i></div>
+            </div>
+        </div>
+
+        <!-- Revenue Card (Full width summary) -->
+        <div class="card stat-card" style="margin-bottom: 2.5rem; background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);">
+            <div class="stat-info">
+                <h3>Total Collections (Paid Invoices Summary)</h3>
+                <div class="stat-number" id="total-revenue" style="color: var(--accent-emerald);">₹0.00</div>
+            </div>
+            <div class="stat-icon success" style="background: rgba(16, 185, 129, 0.25); width: 60px; height: 60px; font-size: 1.8rem;">
+                <i class="fas fa-donate"></i>
+            </div>
+        </div>
+
+        <!-- Double Column Active Tables -->
+        <div class="grid-2">
+            <!-- Today's Consultations -->
+            <div class="card">
+                <h3 style="margin-bottom: 1.25rem; font-size: 1.3rem; border-left: 4px solid var(--accent-amber); padding-left: 0.75rem;">
+                    Today's Consultations
+                </h3>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Patient Name</th>
+                                <th>Doctor Name</th>
+                                <th>Time</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="today-appointments-table">
+                            <!-- Populated dynamically via script.js -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Recent Inpatient Registrations -->
+            <div class="card">
+                <h3 style="margin-bottom: 1.25rem; font-size: 1.3rem; border-left: 4px solid var(--primary-indigo); padding-left: 0.75rem;">
+                    Recent Bookings
+                </h3>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Patient Name</th>
+                                <th>Doctor Name</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recent-appointments-table">
+                            <!-- Populated dynamically via script.js -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Global JS Script -->
+    <script src="script.js"></script>
+</body>
+</html>
